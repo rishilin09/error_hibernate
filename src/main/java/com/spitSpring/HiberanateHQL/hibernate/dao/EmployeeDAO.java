@@ -2,13 +2,14 @@ package com.spitSpring.HiberanateHQL.hibernate.dao;
 
 import java.util.List;
 
+import javax.swing.Spring;
+
 import org.hibernate.*;
-import org.hibernate.query.Query;
+import org.springframework.core.SpringVersion;
 import org.springframework.stereotype.Service;
 
 import com.spitSpring.HiberanateHQL.hibernate.entity.Employee;
 import com.spitSpring.HiberanateHQL.hibernate.util.HibernateUtil;
-
 
 @Service
 public class EmployeeDAO {
@@ -17,6 +18,7 @@ public class EmployeeDAO {
         try{
 			SessionFactory sessionFactory =  HibernateUtil.getSessionFactory();
 			Session session = sessionFactory.openSession();
+			System.out.println(SpringVersion.getVersion());
         	List<Employee> employees = session.createQuery("from Employee", Employee.class).list();
         	return employees;
         } catch (Exception e) {
@@ -30,8 +32,11 @@ public class EmployeeDAO {
 			SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 			Session session = sessionFactory.openSession();
 			transaction = session.beginTransaction();
+//			Employee newEmp = new Employee(emp.getEmpName(), emp.getEmpSalary(), emp.getEmpDept(), emp.getEmpAddress());
+//			System.out.println(newEmp.toString());
+//			session.save(newEmp);
 			System.out.println(emp.toString());
-			session.persist(emp);
+			session.save(emp);
 			transaction.commit();
 			return true;
 		} catch (Exception e) {
